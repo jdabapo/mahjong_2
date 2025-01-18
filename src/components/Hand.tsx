@@ -1,10 +1,8 @@
-import React, { FC, forwardRef, useState } from "react";
-import { ReactSortable } from "react-sortablejs";
-import {BackgroundImage, Grid, GridCol, Group, ScrollArea} from "@mantine/core";
-import {Tile} from './Tile';
-import {Tile as TileType} from "../../../common/types"
-interface HandProps extends TileType{
-    id: number;
+import { FC, forwardRef, useState } from "react"
+import { ReactSortable } from "react-sortablejs"
+import {BackgroundImage, Group, ScrollArea} from "@mantine/core"
+import {Tile, TileProps} from './Tile'
+interface HandProps{
   }
 
 
@@ -19,29 +17,30 @@ const CustomGroup = forwardRef<HTMLDivElement, any>((props, ref) => {
       />
     </ScrollArea>
     )
-  });
+  })
 
-export const Hand: FC = (props) => {
-  const [state, setState] = useState<HandProps[]>([
-    { id:0, value: 1, suit: 'Balls' },
-    { id:1,value: 3, suit: 'Balls' },
-    { id:2,value: 1, suit: 'Balls' },
-    { id:3,value: 6, suit: 'Balls' },
-    { id:4,value: 1, suit: 'Balls' },
-    { id:5,value: 1, suit: 'Balls' },
-    { id:6,value: 1, suit: 'Balls' },
-    { id:7,value: 1, suit: 'Balls' },
-    { id:8, value: 1, suit: 'Balls' },
-    { id:9,value: 3, suit: 'Balls' },
-    { id:10,value: 1, suit: 'Balls' },
-    { id:11,value: 6, suit: 'Balls' },
-    { id:12,value: 1, suit: 'Balls' },
-    { id:13,value: 1, suit: 'Balls' },
-    { id:14,value: 1, suit: 'Balls' },
-    { id:15,value: 1, suit: 'Balls' },
-    { id:16,value: 1, suit: 'Balls' },
-    { id:17,value: 1, suit: 'Balls' },
-  ]);
+export const Hand: FC<HandProps> = () => {
+  const [state, setState] = useState<TileProps[]>([
+    { id: 1, value: 3, suit: 'Balls' },
+    { id: 2, value: 1, suit: 'Balls' },
+    { id: 3, value: 6, suit: 'Balls' },
+    { id: 4, value: 1, suit: 'Balls' },
+    { id: 5, value: 1, suit: 'Balls' },
+    { id: 6, value: 1, suit: 'Balls' },
+    { id: 7, value: 1, suit: 'Balls' },
+    { id: 8, value: 1, suit: 'Balls' },
+    { id: 9, value: 3, suit: 'Balls' },
+    { id: 10, value: 1, suit: 'Balls' },
+    { id: 11, value: 1, suit: 'Balls' },
+    { id: 12, value: 1, suit: 'Balls' },
+    { id: 13, value: 1, suit: 'Balls' },
+    { id: 14, value: 1, suit: 'Balls' },
+    { id: 15, value: 1, suit: 'Balls' },
+    { id: 16, value: 1, suit: 'Balls' },
+    { id: 17, value: 1, suit: 'Balls' },
+    { id: 18, value: 1, suit: 'Balls' },
+    { id: 19, value: 1, suit: 'Balls' },
+  ])
 
   return (
     <>
@@ -57,12 +56,12 @@ export const Hand: FC = (props) => {
         animation={100}
         ghostClass={ 'blue-background-class'}
     >
-      {state.map((item) => (
-        <Tile key={item.id} suit={item.suit} value={item.value}/>
+      {state.map(({value, suit, id}) => (
+        <Tile key={id} id={id} value={value} suit={suit}/>
       ))}
     </ReactSortable>
     </BackgroundImage>
     </>
 
-  );
-};
+  )
+}

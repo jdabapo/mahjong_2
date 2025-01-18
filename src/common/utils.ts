@@ -177,11 +177,3 @@ export function CheckMahjong(hand:Tile[]) : boolean {
   const visited = Array(hand.length).fill(false);
   return checkWinningCombination(visited, false);
 }
-
-export interface SocketMessage {
-  channel: string;
-  message: MahjongMessage | ChatMessage;
-}
-
-type MahjongMessage = "DISCARD" | "PICKUP";
-type ChatMessage = "USERS_ADD";

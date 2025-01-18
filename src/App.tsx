@@ -3,6 +3,8 @@ import { socket } from './components/socket/socket'
 import { ConnectionState } from './components/socket/ConnectionState'
 import { ConnectionManager } from './components/socket/ConnectionManager'
 import {MyForm} from './components/MyForm'
+import { Hand } from './components/Hand'
+import { Tile } from './components/Tile'
 
 
 export default function App() {
@@ -31,6 +33,8 @@ export default function App() {
       <ConnectionState isConnected={ isConnected } />
       <ConnectionManager />
       <MyForm />
+      <Tile value={1} suit={'Balls'} id={0}/>
+      <Hand />
     </div>
   )
 }

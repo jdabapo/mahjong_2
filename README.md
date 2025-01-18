@@ -28,7 +28,6 @@ Frontend:
 react
 ts
 vite
-bun
 
 Backend:
 ts
@@ -38,7 +37,7 @@ to run client:
 - `npm run dev` 
 to run server:
 - go to server folder
-- `node server.ts`
+- `npx tsx server/server.ts`
 
 - Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
 - Optionally add `...tseslint.configs.stylisticTypeChecked`

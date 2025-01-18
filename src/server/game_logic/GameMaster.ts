@@ -1,56 +1,58 @@
-import { GameState, MahjongMessage, Tile, action } from "../../common/types";
-import Deck from "./Deck";
-import { Player } from "./Player";
+import { GameState, MahjongMessage } from "../../common/events"
+import { Tile } from "../../common/types"
+import Deck from "./Deck"
+import { Player } from "./Player"
 
     export default class GameMaster {
-        currentState: GameState = GameState.WAITING;
-        currentPlayer: number = 0;
-        currentHighestAction: MahjongMessage | undefined;
-        deck: Deck;
-        private players: Array<Player> = [];
-        //playOrder: Array<Player>;
+        currentState: GameState = GameState.WAITING
+        currentPlayer: Player | null
+        currentHighestAction: MahjongMessage | null
+        deck: Deck
+        private players: Player[] = []
+        //playOrder: Array<Player>
 
         constructor(isShuffled: boolean) {
             // Determine player order arbitrarily for now
             // TODO: do this
-            //this.playOrder = [this.playerEast, this.playerSouth, this.playerWest, this.playerNorth];
+            //this.playOrder = [this.playerEast, this.playerSouth, this.playerWest, this.playerNorth]
 
-            this.deck = new Deck(isShuffled);
-
+            this.deck = new Deck(isShuffled)
+            this.currentHighestAction = null
+            this.currentPlayer = null
             // give players the hands
             // TODO: determine dealer later
-            //this.deck.Init_Deal(this.playOrder,0);
+            //this.deck.Init_Deal(this.playOrder,0)
 
             // send message to server to start the game
         }
 
-        AddPlayer(newPlayer: Player){ this.players.push(newPlayer);}
+        AddPlayer(newPlayer: Player){ this.players.push(newPlayer)}
         RemovePlayer(removePlayer: Player){ this.players = this.players.filter((player) => player.playerName !== removePlayer.playerName) }
-        GetPlayers(){this.players;}
+        GetPlayers(){this.players}
 
         InitGame(){
-            this.currentState = GameState.DEAL;
-            this.deck.Init_Deal(this.players,0);
+            this.currentState = GameState.DEAL
+            this.deck.Init_Deal(this.players,0)
         }
 
-        DetermineAction(discardedTile: Tile): Array<action> {
+        DetermineAction(discardedTile: Tile): any {
             this.players.forEach(player => {
                 player.HasAction(discardedTile,this.currentPlayer)
-            });
-            return [];
+            })
+            return []
         }
 
         AdvanceTurn(){
-            const drawnTile: Tile = this.deck.Deal_One();
-            this.currentPlayer++;
-            if(this.currentPlayer === 4) this.currentPlayer = 0;
-            this.currentState = GameState.PICKUP;
+            const drawnTile: Tile = this.deck.Deal_One()
+            this.currentPlayer++
+            if(this.currentPlayer === 4) this.currentPlayer = 0
+            this.currentState = GameState.PICKUP
         }
 
         DetermineNextPlayer(proposedAction: MahjongMessage){
             if(this.currentHighestAction === undefined){
                 if(proposedAction !== MahjongMessage.PASS && proposedAction !== MahjongMessage.DISCARD){
-                    this.currentHighestAction = proposedAction;
+                    this.currentHighestAction = proposedAction
                 }
             }
             else{
