@@ -34,7 +34,13 @@ export default function App() {
       <ConnectionManager />
       <MyForm />
       <Tile value={1} suit={'Balls'} id={0}/>
-      <Hand />
+      <Hand hand={
+        [{
+          value: 1,
+          suit: 'Balls',
+          id: 0
+        }]
+      }/>
     </div>
   )
 }

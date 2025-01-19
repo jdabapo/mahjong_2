@@ -2,9 +2,9 @@ import { FC, forwardRef, useState } from "react"
 import { ReactSortable } from "react-sortablejs"
 import {BackgroundImage, Group, ScrollArea} from "@mantine/core"
 import {Tile, TileProps} from './Tile'
-import { Hand } from "../common/types"
+import { useSelector } from "react-redux"
 interface HandProps{
-  hand: Hand
+  hand: TileProps[]
 }
 
 
@@ -21,8 +21,10 @@ const CustomGroup = forwardRef<HTMLDivElement, any>((props, ref) => {
     )
   })
 
-export const Hand: FC<HandProps> = ({hand}) => {
-  const [state, setState] = useState<TileProps[]>()
+export const Hand: FC<HandProps> = () => {
+  const hand = useSelector((state: any) => state.mahjong.hand)
+  console.log(hand)
+  const [state2, setState2] = useState<TileProps[]>(hand || [])
 
   return (
     <>
@@ -32,13 +34,13 @@ export const Hand: FC<HandProps> = ({hand}) => {
     >
     <ReactSortable
         tag={CustomGroup}
-        list={state} 
-        setList={setState}
+        list={state2} 
+        setList={setState2}
         disabled={false}
         animation={100}
         ghostClass={ 'blue-background-class'}
     >
-      {state.map(({value, suit, id}) => (
+      {state2.map(({value, suit, id}) => (
         <Tile key={id} id={id} value={value} suit={suit}/>
       ))}
     </ReactSortable>

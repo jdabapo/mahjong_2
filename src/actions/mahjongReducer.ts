@@ -1,20 +1,28 @@
 import { Tile } from "../common/types"
-import { SELECT_TILE } from "./mahjongActionTypes"
+import { RECEIVE_HAND, SELECT_TILE } from "./mahjongActionTypes"
 
-type initialStateType = {
-    tile: Tile | null
+export type initialStateType = {
+    selectedTile: Tile | null,
+    hand: Tile[] | null
+
 }
 
 const initialState = {
-    tile: null
+    selectedTile: null,
+    hand: null
 }
 
-const mahjongReducer = (state: initialStateType = initialState, action: { type: string, tile?: Tile }) => {
+const mahjongReducer = (state: initialStateType = initialState, action: { type: string, payload: any }) => {
     switch (action.type) {
         case SELECT_TILE:
             return {
                 ...state,
-                tile: action.tile || null
+                tile: action.payload.tile || null
+            }
+        case RECEIVE_HAND:
+            return {
+                ...state,
+                hand: action.payload.hand || null
             }
         default:
             return state
