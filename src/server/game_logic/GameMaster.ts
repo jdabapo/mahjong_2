@@ -8,9 +8,7 @@ import { Player } from "./Player"
         currentPlayer: Player | null
         currentHighestAction: MahjongMessage | null
         deck: Deck
-        private players: Player[] = []
-        //playOrder: Array<Player>
-
+        private players: Player[]
         constructor(isShuffled: boolean) {
             // Determine player order arbitrarily for now
             // TODO: do this
@@ -19,34 +17,31 @@ import { Player } from "./Player"
             this.deck = new Deck(isShuffled)
             this.currentHighestAction = null
             this.currentPlayer = null
-            // give players the hands
-            // TODO: determine dealer later
-            //this.deck.Init_Deal(this.playOrder,0)
-
-            // send message to server to start the game
+            this.players = [new Player('test')]
         }
 
         AddPlayer(newPlayer: Player){ this.players.push(newPlayer)}
-        RemovePlayer(removePlayer: Player){ this.players = this.players.filter((player) => player.playerName !== removePlayer.playerName) }
+        RemovePlayer(removePlayer: Player){ this.players = this.players.filter((player) => player.playerId !== removePlayer.playerId) }
         GetPlayers(){this.players}
-
+        GetPlayerHand(playerId: string){return this.players.find(player => player.playerId === playerId)?.GetHand()}
         InitGame(){
             this.currentState = GameState.DEAL
             this.deck.Init_Deal(this.players,0)
         }
 
+        // GetPlayerHand(playerId: string){ return player.GetHand() }
         DetermineAction(discardedTile: Tile): any {
-            this.players.forEach(player => {
-                player.HasAction(discardedTile,this.currentPlayer)
-            })
+            // this.players.forEach(player => {
+            //     player.HasAction(discardedTile,this.currentPlayer)
+            // })
             return []
         }
 
         AdvanceTurn(){
-            const drawnTile: Tile = this.deck.Deal_One()
-            this.currentPlayer++
-            if(this.currentPlayer === 4) this.currentPlayer = 0
-            this.currentState = GameState.PICKUP
+            // const drawnTile: Tile = this.deck.Deal_One()
+            // this.currentPlayer++
+            // if(this.currentPlayer === 4) this.currentPlayer = 0
+            // this.currentState = GameState.PICKUP
         }
 
         DetermineNextPlayer(proposedAction: MahjongMessage){

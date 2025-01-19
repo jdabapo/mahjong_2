@@ -1,6 +1,6 @@
 //@ts-ignore
 import { expect, test, describe } from "bun:test";
-import {Tile, Suit, Honor, Bonus, TileSort, isChow, CheckMahjong, TilesEqual, Hand} from "../types";
+import {Tile, Suit, Honor, Bonus, TileSort, isChow, CheckMahjong, TilesEqual, Hand} from "./types";
 
 describe("determineWinningHand", ()=>{
     const ball2: Tile = {suit:"Balls",value:2};

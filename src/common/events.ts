@@ -1,5 +1,5 @@
 import { Player } from "../server/game_logic/Player"
-import { Tile } from "./types"
+import { Hand, Tile } from "./types"
 
 export enum EventTypes {
   mahjongMessage = "mahjongMessage",
@@ -49,8 +49,9 @@ export interface PlayerMessagePayload extends MessagePayload {
 }
 
 export interface GameMessagePayload extends MessagePayload {
-  player: Player
+  playerId: string
   gameState?: GameState
+  hand?: Hand
 }
 
 export enum Channel {CHAT = "CHAT", MAHJONG = "MAHJONG", GAME = "GAME"}

@@ -1,5 +1,6 @@
 import { io, Socket } from 'socket.io-client'
 import { Channel, GameMessage, GameState } from '../../common/types';
+import { EventTypes } from '../../common/events';
 
 // "undefined" means the URL will be computed from the `window.location` object
 const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3000';
@@ -15,7 +16,7 @@ socket.on('connect_error', (err) => {
 });
 
 
-socket.on('serverEvent', (data) => {
+socket.on(EventTypes.gameStateMessage, (data) => {
     console.log('Received response from server:', data);
 });
 

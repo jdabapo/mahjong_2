@@ -2,8 +2,10 @@ import { FC, forwardRef, useState } from "react"
 import { ReactSortable } from "react-sortablejs"
 import {BackgroundImage, Group, ScrollArea} from "@mantine/core"
 import {Tile, TileProps} from './Tile'
+import { Hand } from "../common/types"
 interface HandProps{
-  }
+  hand: Hand
+}
 
 
 // This is just like a normal component, but now has a ref.
@@ -19,28 +21,8 @@ const CustomGroup = forwardRef<HTMLDivElement, any>((props, ref) => {
     )
   })
 
-export const Hand: FC<HandProps> = () => {
-  const [state, setState] = useState<TileProps[]>([
-    { id: 1, value: 3, suit: 'Balls' },
-    { id: 2, value: 1, suit: 'Balls' },
-    { id: 3, value: 6, suit: 'Balls' },
-    { id: 4, value: 1, suit: 'Balls' },
-    { id: 5, value: 1, suit: 'Balls' },
-    { id: 6, value: 1, suit: 'Balls' },
-    { id: 7, value: 1, suit: 'Balls' },
-    { id: 8, value: 1, suit: 'Balls' },
-    { id: 9, value: 3, suit: 'Balls' },
-    { id: 10, value: 1, suit: 'Balls' },
-    { id: 11, value: 1, suit: 'Balls' },
-    { id: 12, value: 1, suit: 'Balls' },
-    { id: 13, value: 1, suit: 'Balls' },
-    { id: 14, value: 1, suit: 'Balls' },
-    { id: 15, value: 1, suit: 'Balls' },
-    { id: 16, value: 1, suit: 'Balls' },
-    { id: 17, value: 1, suit: 'Balls' },
-    { id: 18, value: 1, suit: 'Balls' },
-    { id: 19, value: 1, suit: 'Balls' },
-  ])
+export const Hand: FC<HandProps> = ({hand}) => {
+  const [state, setState] = useState<TileProps[]>()
 
   return (
     <>

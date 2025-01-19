@@ -6,16 +6,16 @@ export const MAX_HAND_SIZE = 17
 
 export class Player {
     // TODO: NEEDS CONSTRUCTOR
-    constructor()
+    constructor(playerId: string)
     {
-      this.playerName = "test"
+      this.playerId = playerId
       this.turnOrder = 0
     }
 
-    private tiles: Hand = new Array<Tile>(MAX_HAND_SIZE)
+    private tiles: Hand = new Array<Tile>()
     turnOrder: number
-    playerName: string
-    ReturnHand(): Hand {return this.tiles}
+    playerId: string | null
+    GetHand(): Hand {return this.tiles}
 
     UpdateHand(pickupTile: Tile,discardTile: Tile): void {
         // push to the tiles hand

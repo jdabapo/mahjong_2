@@ -34,6 +34,7 @@ export const Tile: FC<TileProps> = ({ value, suit }) => {
         fit="scale-down" // Prevents scaling up
         style={{ margin: 0 }}
         onClick={() => {
+
             const payload: MahjongMessagePayload = {
                 message: MahjongMessage.DISCARD,
                 interactedTile: {value: value, suit: suit},

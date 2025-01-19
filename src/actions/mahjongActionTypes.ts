@@ -1,0 +1,1 @@
+export const SELECT_TILE = 'SELECT_TILE'
