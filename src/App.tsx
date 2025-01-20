@@ -4,6 +4,7 @@ import { ConnectionState } from './components/socket/ConnectionState'
 import { ConnectionManager } from './components/socket/ConnectionManager'
 import { Hand } from './components/Hand'
 import { Tile } from './components/Tile'
+import { ReadyButton } from './components/ReadyButton'
 
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
     <div className="App">
       <ConnectionState isConnected={ isConnected } />
       <ConnectionManager />
+      <ReadyButton />
       <Tile value={1} suit={'Balls'}/>
       <Hand/>
     </div>

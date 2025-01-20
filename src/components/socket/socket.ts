@@ -1,5 +1,5 @@
 import { io, Socket } from 'socket.io-client'
-import { EventTypes } from '../../common/events'
+import { EventTypes, PlayerMessage } from '../../common/events'
 import store from '../../actions/store'
 import { RECEIVE_HAND } from '../../actions/mahjongActionTypes'
 

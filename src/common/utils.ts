@@ -1,8 +1,8 @@
-import {Tile} from './types'
+import {Bonus, Honor, Suit, Tile} from './types'
 
 export function TilesEqual(a:Tile, b:Tile): boolean {
     if(a === undefined || b === undefined) return false;
-    if(a.value === undefined || b.value === undefined){
+    if(a.value === null || b.value === null){
       return (a.suit === b.suit);
     }
     return (a.value === b.value && a.suit === b.suit);
@@ -29,28 +29,28 @@ export function TilesEqual(a:Tile, b:Tile): boolean {
     let aValue = 0;
     let bValue = 0;
   
-    if(a.value !== undefined){
+    if(a.value !== null){
       const temp = TileValues.get(a.suit);
-      if (temp !== undefined) {
+      if (temp) {
         aValue = temp + a.value; 
       }
     }
     else {
       const temp = TileValues.get(a.suit);
-      if( temp !== undefined) {
+      if(temp) {
         aValue = temp;
       }
     }
   
-    if(b.value !== undefined) {
+    if(b.value !== null) {
       const temp = TileValues.get(b.suit);
-      if (temp !== undefined) {
+      if (temp) {
         bValue = temp + b.value; 
       }
     }
     else{
       const temp = TileValues.get(b.suit);
-      if( temp !== undefined) {
+      if(temp) {
         bValue = temp;
       }
     }
@@ -60,7 +60,7 @@ export function TilesEqual(a:Tile, b:Tile): boolean {
 
   // Helper function to check for a valid chow (consecutive tiles of the same suit)
 export function isChow(tile1: Tile, tile2: Tile, tile3: Tile): boolean {
-  if (tile1.value === undefined || tile2.value === undefined || tile3.value === undefined) {
+  if (tile1.value === null || tile2.value === null || tile3.value === null) {
     return(false)
   } else {
     return (
@@ -176,4 +176,45 @@ export function CheckMahjong(hand:Tile[]) : boolean {
 
   const visited = Array(hand.length).fill(false);
   return checkWinningCombination(visited, false);
+}
+
+// HELPERS
+export function generateRegularTiles(): Tile[] {
+  const regularTiles: Tile[] = []
+  for(const suit of ['Bamboo','Character','Balls']){
+    for(let val = 1; val < 10; val++){
+      for(let count = 0; count < 4; count++){
+        const s:Suit = suit as Suit;
+        regularTiles.push({suit:s,value:val});
+      }
+    }
+  }
+  return regularTiles
+}
+export function generateHonorTiles(): Tile[] {
+  const honorTiles: Tile[] = [];
+  for(const suit of ["Green_Dragon","Red_Dragon","White_Dragon"]){
+      for(let count = 1; count < 5; count++){
+        const h:Honor = suit as Honor;
+        honorTiles.push({suit:h, value: null});
+    }
+  }
+  for(const suit of ["North","East","South","West"]){
+    for(let count = 1; count < 5; count++){
+      const h:Honor = suit as Honor;
+      honorTiles.push({ suit:h, value: null });
+  }
+}
+
+  return honorTiles;
+}
+export function generateBonusTiles(): Tile[]{
+  const BonusTiles: Tile[] = [];
+  for(const suit of ['Flower','Season']){
+      for(let count = 1; count < 5; count++){
+        const b:Bonus = suit as Bonus;
+        BonusTiles.push({ suit:b , value:count });
+      }
+    }
+    return BonusTiles;
 }

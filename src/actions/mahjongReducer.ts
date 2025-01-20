@@ -9,7 +9,7 @@ export type initialStateType = {
 
 const initialState = {
     selectedTile: null,
-    hand: null
+    hand: []
 }
 
 const mahjongReducer = (state: initialStateType = initialState, action: { type: string, payload: any }) => {

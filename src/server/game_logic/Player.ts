@@ -1,5 +1,5 @@
-import { MahjongMessagePayload } from "../../common/events"
 import { Tile } from "../../common/types"
+import { isChow } from "../../common/utils"
 
 // have to end game with 17
 export const MAX_HAND_SIZE = 17
@@ -37,9 +37,8 @@ export class Player {
     AddToHand(pickupTile: Tile): void {
         this.tiles.push(pickupTile)
     }
-    /* TODO: Should run HasKong, HasPung, HasChow, and then return which actions it can do
-    * Maybe return a JS Object
-    *   { Pung: [[1,1,1]],
+    /* Runs HasKong, HasPung, HasChow, and then returns an object with the tiles that are affected
+    *   { Pung: [1,1,1],
     *     Chow: [],
     *     Kong: [1,1,1,1]
     *   }
@@ -107,7 +106,6 @@ export class Player {
       for (let i = 0; i < this.tiles.length - 1; i++) {
           const p_tile0 = this.tiles[i]
           const p_tile1 = this.tiles[i + 1]
-  
           if (p_tile0.suit !== discardedTile.suit || p_tile1.suit !== discardedTile.suit) {
               continue
           }

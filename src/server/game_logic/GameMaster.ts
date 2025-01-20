@@ -17,13 +17,25 @@ import { Player } from "./Player"
             this.deck = new Deck(isShuffled)
             this.currentHighestAction = null
             this.currentPlayer = null
-            this.players = [new Player('test')]
+            this.players = []
         }
 
-        AddPlayer(newPlayer: Player){ this.players.push(newPlayer)}
+        AddPlayer(playerId: string){ this.players.push(new Player(playerId)) }
         RemovePlayer(removePlayer: Player){ this.players = this.players.filter((player) => player.playerId !== removePlayer.playerId) }
-        GetPlayers(){this.players}
-        GetPlayer(playerId: string){return this.players.find(player => player.playerId === playerId)}
+        GetPlayers(){return this.players}
+        GetPlayer = (playerId: string): Player => {
+            const player = this.players.find(player => player.playerId === playerId)
+            if(player === undefined){
+                throw new Error('Player not found')
+            }
+            return player
+        }
+        GetCurrentState(){return this.currentState}
+        GetCurrentPlayer(){return this.currentPlayer}
+        ModifyTurnOrder(playerId: string, turnOrder: number){
+            const player = this.GetPlayer(playerId)
+            player.turnOrder = turnOrder
+        }
         GetPlayerHand(playerId: string){return this.players.find(player => player.playerId === playerId)?.GetHand()}
         InitGame(){
             this.currentState = GameState.DEAL
@@ -34,10 +46,15 @@ import { Player } from "./Player"
             return this.players.find(player => player.playerId === playerId)?.UpdateHand(tile)
         }
         DeterminePlayersWithAction(discardedTile: Tile, currentTurnOrder: number): Player[] {
-            this.players.forEach(player => {
-                player.HasAction(discardedTile, currentTurnOrder)
-            })
-            return []
+            return this.players.reduce((acc: Player[], player) => {
+                if(player.turnOrder !== currentTurnOrder){
+                    const action = player.HasAction(discardedTile, currentTurnOrder)
+                    if(action.Pung.length > 0 || action.Kong.length > 0 || action.Chow.length > 0){
+                        acc.push(player)
+                    }
+                }
+                return acc
+            }, [])
         }
 
         AdvanceTurn(){

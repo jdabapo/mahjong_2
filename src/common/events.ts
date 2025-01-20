@@ -1,5 +1,5 @@
 import { Player } from "../server/game_logic/Player"
-import { Hand, Tile } from "./types"
+import { Tile } from "./types"
 
 export enum EventTypes {
   mahjongMessage = "mahjongMessage",
@@ -21,8 +21,8 @@ export interface ClientToServerEvents extends BaseEvent {
 }
 
 export interface ServerToClientEvents extends BaseEvent {
-  gameStateMessage: (payload: GameMessagePayload) => void
-  mahjongMessage: (payload: MahjongMessagePayload) => void
+  [EventTypes.gameStateMessage]: (payload: GameMessagePayload) => void
+  [EventTypes.mahjongMessage]: (payload: MahjongMessagePayload) => void
 }
 
 export interface ServerToServerEvents extends BaseEvent {
@@ -35,23 +35,21 @@ export interface SocketData {
   age: number
 }
 
-interface MessagePayload {
-  message: MahjongMessage | PlayerMessage | GameMessage
-}
 
-export interface MahjongMessagePayload extends MessagePayload {
+export interface MahjongMessagePayload {
   interactedTile: Tile
   pickuper?: Player
 }
 
-export interface PlayerMessagePayload extends MessagePayload {
-  player: Player
+export interface PlayerMessagePayload {
+  playerId: string
+  message: PlayerMessage
 }
 
-export interface GameMessagePayload extends MessagePayload {
-  playerId: string
+export interface GameMessagePayload {
+  playerId?: string
   gameState?: GameState
-  hand?: Hand
+  hand?: Tile[]
 }
 
 export enum Channel {CHAT = "CHAT", MAHJONG = "MAHJONG", GAME = "GAME"}

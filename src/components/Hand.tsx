@@ -1,7 +1,7 @@
-import { forwardRef, useEffect, useState } from "react"
-import { ReactSortable } from "react-sortablejs"
+import { forwardRef, useState } from "react"
+import { ItemInterface, ReactSortable } from "react-sortablejs"
 import { BackgroundImage, Group, ScrollArea } from "@mantine/core"
-import { Tile, TileProps } from './Tile'
+import { Tile } from './Tile'
 import { useSelector } from "react-redux"
 
 // This is just like a normal component, but now has a ref.
@@ -19,11 +19,7 @@ const CustomGroup = forwardRef<HTMLDivElement, any>((props, ref) => {
 
 export const Hand = () => {
   const hand = useSelector((state: any) => state.mahjong.hand || [])
-  const [state, setState] = useState<TileProps[]>(hand)
-  
-  useEffect(() => {
-    setState(hand)
-  }, [hand])
+  const [state, setState] = useState<ItemInterface[]>(hand)
 
   return (
     <>
@@ -42,7 +38,7 @@ export const Hand = () => {
           >
             {/* TODO: FIX THE KEY VALUE */}
             {state.map(({ value, suit }, idx) => (
-              <Tile key={idx+suit+value} id={idx+suit+value} value={value} suit={suit} />
+              <Tile key={idx.toString()} id={idx.toString()} value={value} suit={suit} />
             ))}
           </ReactSortable>
         </BackgroundImage>

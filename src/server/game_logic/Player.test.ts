@@ -74,5 +74,19 @@ describe('Player', () => {
             const result = player.HasChow(tile3, 3)
             expect(result).toEqual([[tile1, tile2, tile3], [tile2, tile3, tile4]])
         })
+
+        it('should return an empty array if the turn order is not correct', () => {
+            player.AddToHand(tile1)
+            player.AddToHand(tile2)
+            const result = player.HasChow(tile3, 2)
+            expect(result).toEqual([])
+        })
+
+        it('should not return a chow if the turn order is correct but the tiles are not in sequence', () => {
+            player.AddToHand(tile1)
+            player.AddToHand(tile2)
+            const result = player.HasChow(tile4, 3)
+            expect(result).toEqual([])
+        })
     })
 })

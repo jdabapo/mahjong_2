@@ -1,4 +1,5 @@
 import { Tile, Suit, Honor, Bonus } from "../../common/types";
+import { generateRegularTiles, generateBonusTiles, generateHonorTiles } from "../../common/utils";
 import { MAX_HAND_SIZE, Player } from "./Player";
 
   const MAX_TILES = 144;
@@ -45,11 +46,10 @@ import { MAX_HAND_SIZE, Player } from "./Player";
     
     // TODO: fix the else
     Deal_One(): Tile {
-      const tile = this.Bank.pop();
-      if(tile) return tile;
-      else {
-        return {suit:'Balls',value:1}
+      if(this.Bank.length === 0){
+        throw new Error('No more tiles in the deck')
       }
+      return this.Bank.pop() ?? {suit: 'Bamboo', value: 1}
     };
 
     private InitializeBank(): void{
@@ -66,48 +66,9 @@ import { MAX_HAND_SIZE, Player } from "./Player";
       this.Bank.pop();
     }
 
-    Bank: Tile[] = [];
+    Bank: Tile[] = []
   }
 
-  // HELPERS
-  function generateRegularTiles(): Tile[] {
-    const regularTiles: Tile[] = [];
-    for(const suit of ['Bamboo','Character','Balls']){
-      for(let val = 1; val < 10; val++){
-        for(let count = 0; count < 4; count++){
-          const s:Suit = suit as Suit;
-          regularTiles.push({suit:s,value:val});
-        }
-      }
-    }
-    return regularTiles;
-  }
-  function generateHonorTiles(): Tile[] {
-    const honorTiles: Tile[] = [];
-    for(const suit of ["Green_Dragon","Red_Dragon","White_Dragon"]){
-        for(let count = 1; count < 5; count++){
-          const h:Honor = suit as Honor;
-          honorTiles.push({suit:h, value: null});
-      }
-    }
-    for(const suit of ["North","East","South","West"]){
-      for(let count = 1; count < 5; count++){
-        const h:Honor = suit as Honor;
-        honorTiles.push({ suit:h, value: null });
-    }
-  }
-
-    return honorTiles;
-  }
-  function generateBonusTiles(): Tile[]{
-    const BonusTiles: Tile[] = [];
-    for(const suit of ['Flower','Season']){
-        for(let count = 1; count < 5; count++){
-          const b:Bonus = suit as Bonus;
-          BonusTiles.push({ suit:b , value:count });
-        }
-      }
-      return BonusTiles;
-  }
+  
 
 export default Deck
