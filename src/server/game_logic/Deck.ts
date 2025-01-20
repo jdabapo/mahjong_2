@@ -34,7 +34,7 @@ import { MAX_HAND_SIZE, Player } from "./Player";
 
     // TODO: Do just normal giving tiles for now
     // For now, just give each player their 16 tiles, and dealer gets 17 tiles
-    Init_Deal(players: Array<Player>, dealer: number): void{
+    Init_Deal(players: Player[], dealer: number): void {
       players.forEach(player => {
         for(let i = 0; i < MAX_HAND_SIZE - 1; i++){
           player.AddToHand(this.Deal_One());
@@ -44,7 +44,7 @@ import { MAX_HAND_SIZE, Player } from "./Player";
     };
     
     // TODO: fix the else
-    Deal_One(): Tile{
+    Deal_One(): Tile {
       const tile = this.Bank.pop();
       if(tile) return tile;
       else {
@@ -70,9 +70,9 @@ import { MAX_HAND_SIZE, Player } from "./Player";
   }
 
   // HELPERS
-  function generateRegularTiles(): Tile[]{
+  function generateRegularTiles(): Tile[] {
     const regularTiles: Tile[] = [];
-    for(const suit of ['Bamboo','Character','Ball']){
+    for(const suit of ['Bamboo','Character','Balls']){
       for(let val = 1; val < 10; val++){
         for(let count = 0; count < 4; count++){
           const s:Suit = suit as Suit;
@@ -82,18 +82,18 @@ import { MAX_HAND_SIZE, Player } from "./Player";
     }
     return regularTiles;
   }
-  function generateHonorTiles(): Tile[]{
+  function generateHonorTiles(): Tile[] {
     const honorTiles: Tile[] = [];
-    for(const suit of ["Green Dragon","Red Dragon","White Dragon"]){
+    for(const suit of ["Green_Dragon","Red_Dragon","White_Dragon"]){
         for(let count = 1; count < 5; count++){
           const h:Honor = suit as Honor;
-          honorTiles.push({suit:h});
+          honorTiles.push({suit:h, value: null});
       }
     }
     for(const suit of ["North","East","South","West"]){
       for(let count = 1; count < 5; count++){
         const h:Honor = suit as Honor;
-        honorTiles.push({suit:h});
+        honorTiles.push({ suit:h, value: null });
     }
   }
 
@@ -102,9 +102,9 @@ import { MAX_HAND_SIZE, Player } from "./Player";
   function generateBonusTiles(): Tile[]{
     const BonusTiles: Tile[] = [];
     for(const suit of ['Flower','Season']){
-        for(let count = 0; count < 4; count++){
+        for(let count = 1; count < 5; count++){
           const b:Bonus = suit as Bonus;
-          BonusTiles.push({suit:b,value:count});
+          BonusTiles.push({ suit:b , value:count });
         }
       }
       return BonusTiles;

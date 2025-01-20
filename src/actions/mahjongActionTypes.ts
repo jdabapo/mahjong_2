@@ -1,2 +1,2 @@
-export const SELECT_TILE = 'SELECT_TILE'
-export const RECEIVE_HAND = 'RECIEVE_HAND'
+export const SELECT_TILE = 'MAHJONG::SELECT_TILE'
+export const RECEIVE_HAND = 'MAHJONG::RECIEVE_HAND'

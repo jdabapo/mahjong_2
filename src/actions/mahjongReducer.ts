@@ -17,12 +17,12 @@ const mahjongReducer = (state: initialStateType = initialState, action: { type: 
         case SELECT_TILE:
             return {
                 ...state,
-                tile: action.payload.tile || null
+                tile: action.payload.tile
             }
         case RECEIVE_HAND:
             return {
                 ...state,
-                hand: action.payload.hand || null
+                hand: action.payload
             }
         default:
             return state

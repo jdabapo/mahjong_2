@@ -23,17 +23,20 @@ import { Player } from "./Player"
         AddPlayer(newPlayer: Player){ this.players.push(newPlayer)}
         RemovePlayer(removePlayer: Player){ this.players = this.players.filter((player) => player.playerId !== removePlayer.playerId) }
         GetPlayers(){this.players}
+        GetPlayer(playerId: string){return this.players.find(player => player.playerId === playerId)}
         GetPlayerHand(playerId: string){return this.players.find(player => player.playerId === playerId)?.GetHand()}
         InitGame(){
             this.currentState = GameState.DEAL
             this.deck.Init_Deal(this.players,0)
         }
 
-        // GetPlayerHand(playerId: string){ return player.GetHand() }
-        DetermineAction(discardedTile: Tile): any {
-            // this.players.forEach(player => {
-            //     player.HasAction(discardedTile,this.currentPlayer)
-            // })
+        UpdatePlayerHand(playerId: string, tile: Tile) {
+            return this.players.find(player => player.playerId === playerId)?.UpdateHand(tile)
+        }
+        DeterminePlayersWithAction(discardedTile: Tile, currentTurnOrder: number): Player[] {
+            this.players.forEach(player => {
+                player.HasAction(discardedTile, currentTurnOrder)
+            })
             return []
         }
 

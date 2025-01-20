@@ -36,6 +36,9 @@ io.on('connection', (socket) => {
   // just give hand when player connects
   socket.on(EventTypes.mahjongMessage, ({message, interactedTile})=> {
     console.log('Received clientEvent:', message, interactedTile )
+    // so when a player discards, gamemaster needs to:
+    // update the player's hand
+    gameMaster.DeterminePlayersWithAction(interactedTile, 0)
   })
 
   socket.on(EventTypes.playerMessage, () => {
